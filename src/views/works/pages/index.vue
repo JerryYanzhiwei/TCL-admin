@@ -10,7 +10,7 @@
         <span>编号：</span>
         <el-input v-model="pageForm.teamNo" size="mini"></el-input>
       </p>
-      <p>
+      <!-- <p>
         <span>方向：</span>
         <el-select size="mini" v-model="pageForm.directionId" placeholder="请选择">
           <el-option
@@ -20,7 +20,7 @@
             :value="item.directionId">
           </el-option>
         </el-select>
-      </p>
+      </p> -->
       <p>
         <span>课题：</span>
         <el-select size="mini" v-model="pageForm.subjectId" placeholder="请选择">
