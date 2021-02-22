@@ -181,7 +181,7 @@ export default {
         matchZone: null,
         subjectId: null,
         teamNo: null,
-        status: 123
+        status: null
       },
       pageData: {},
       tableData: [],
