@@ -222,7 +222,7 @@ export default {
       this.pageForm.matchZone = null
       this.pageForm.subjectId = null
       this.pageForm.teamNo = null
-      this.pageForm.status = 123
+      this.pageForm.status = null
     },
     // 获取类目
     async getCategory () {
