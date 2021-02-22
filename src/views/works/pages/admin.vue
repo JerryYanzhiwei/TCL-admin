@@ -90,10 +90,10 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="directionName"
         label="方向">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         label="课题">
         <template slot-scope="scope">

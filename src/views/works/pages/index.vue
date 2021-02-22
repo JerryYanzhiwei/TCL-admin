@@ -83,11 +83,11 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         min-width="7%"
         prop="directionName"
         label="方向">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         min-width="10%"
         label="课题">
