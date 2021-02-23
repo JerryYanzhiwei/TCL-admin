@@ -1,6 +1,6 @@
 <template>
   <div class="main_header_container">
-    <div class="left_txt">TCL创新设计大赛</div>
+    <div class="left_txt">TCL高校科创节</div>
     <div class="right">
       <span>{{adminInfo.username}}</span>
       <span class="line">|</span>
