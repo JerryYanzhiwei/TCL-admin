@@ -237,7 +237,6 @@ export default {
     // 切换分页
     pageChange (data) {
       this.pageForm.pageNo = data
-      this.pageForm.status = 123
       this.getData()
     },
     // 切换赛事类型
@@ -249,7 +248,7 @@ export default {
         directionId: null,
         matchZone: null,
         subjectId: null,
-        status: 123,
+        status: null,
         teamNo: null
       }
       this.activeType = e.name
