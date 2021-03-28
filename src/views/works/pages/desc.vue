@@ -92,6 +92,13 @@
         </div>
       </div>
     </div>
+    <div class="pass_contain">
+      <PublicTitle title="判定结果"></PublicTitle>
+      <div class="pass_item">
+        <el-radio v-model="radio" label="1">通过</el-radio>
+        <el-radio v-model="radio" label="2">不通过</el-radio>
+      </div>
+    </div>
     <!-- 推荐级别 -->
     <!-- <div class="content_container">
       <PublicTitle title="推荐级别"></PublicTitle>
@@ -146,12 +153,14 @@ export default {
       // 评语
       comments: '',
       // 总分
-      score: 0
+      score: 0,
+      // 通过
+      radio: null
     }
   },
 
   created () {
-    this.getTeamDetail()
+    // this.getTeamDetail()
   },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),
@@ -213,6 +222,10 @@ export default {
         this.$message.error('请填写方案创新性')
         return
       }
+      if (!this.radio) {
+        this.$message.error('请选择判定结果')
+        return
+      }
       const arr = ['integrity', 'effect', 'scientificity', 'practicability', 'innovation']
       const objArr = []
       let obj = {}
@@ -222,11 +235,15 @@ export default {
         obj.score = this[arr[i]] * 100
         objArr.push(obj)
       }
+      let progress = Number(this.$route.query.teamProgress)
+      if (Number(this.radio) === 1) progress < 2 && ++progress
+      if (Number(this.radio) === 2 && progress !== 0) --progress
       const params = {
         comments: this.comments,
         teamNo: this.$route.query.teamNo,
         totalScore: this.score * 100,
-        scoreDimensions: objArr
+        scoreDimensions: objArr,
+        teamProgress: progress
       }
       const res = await this.POST_JUDGE_SCORE(params)
       if (res.result === '0' && res.data) {
@@ -319,6 +336,11 @@ export default {
   }
   .comment_container {
     margin: 20px 0;
+  }
+  .pass_contain {
+    .pass_item {
+      margin: 20px 0;
+    }
   }
 }
 </style>

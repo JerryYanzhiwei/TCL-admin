@@ -134,7 +134,10 @@
         prop=""
         label="评审情况">
         <template slot-scope="scope">
-          <PublicButton v-if="activeType !== '2'" @clickHandle="pass(scope.row)">通过</PublicButton>
+          <!-- <PublicButton v-if="activeType !== '2'" @clickHandle="pass(scope.row, 1)">通过</PublicButton>
+          <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
+          <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
+          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="pass(scope.row, 0)">不通过</span>
         </template>
       </el-table-column>
     </el-table>
@@ -150,12 +153,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import PublicButton from '@/components/public_button.vue'
+// import PublicButton from '@/components/public_button.vue'
 import { BASE_URL } from '@/utils/http.js'
 import provinceData from '@/config/province.js'
 export default {
   components: {
-    PublicButton
+    // PublicButton
   },
   data () {
     return {
@@ -263,10 +266,11 @@ export default {
       })
     },
     // 通过
-    async pass (row) {
+    async pass (row, status) {
       console.log('通过:', row)
+      const teamProgress = status ? Number(this.activeType) + 1 : Number(this.activeType) - 1
       const res = await this.PUT_EDIT_PROCESS({
-        teamProgress: Number(this.activeType) + 1,
+        teamProgress: teamProgress,
         teamNo: row.teamNo
       })
       if (res.result === '0' && res.data) {
@@ -294,6 +298,11 @@ export default {
     p {
       width: 15%;
     }
+  }
+  .clickable {
+    font-size: 14px;
+    color: #409eff;
+    cursor: pointer;
   }
   .down_list {
     margin-bottom: 20px;

@@ -110,7 +110,7 @@ export default new Vuex.Store({
     },
     // 评委评分
     async POST_JUDGE_SCORE ({ commit }, data = {}) {
-      const { data: res } = await axios.post(`/judge/team/score?comments=${data.comments}&teamNo=${data.teamNo}&totalScore=${data.totalScore}`, data.scoreDimensions)
+      const { data: res } = await axios.post(`/judge/team/score?comments=${data.comments}&teamNo=${data.teamNo}&totalScore=${data.totalScore}&teamProgress=${data.teamProgress}`, data.scoreDimensions)
       return res
     },
     async GET_CATEGORYS ({ commit }, data = {}) {
