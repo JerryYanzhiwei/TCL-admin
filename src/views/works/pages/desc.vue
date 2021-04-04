@@ -41,7 +41,7 @@
           </div>
           <div class="source_right">
             <!-- <el-input @blur="calcScore" type="number" v-model="integrity" placeholder="方案完整性"></el-input> -->
-            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider @change="calcScore" :min="0" :max="5" v-model="integrity" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
@@ -52,7 +52,7 @@
           </div>
           <div class="source_right">
             <!-- <el-input @blur="calcScore" type="number" v-model="effect" placeholder="数据有效性"></el-input> -->
-            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider @change="calcScore" :min="0" :max="10" v-model="effect" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
@@ -63,7 +63,7 @@
           </div>
           <div class="source_right">
             <!-- <el-input @blur="calcScore" type="number" v-model="scientificity" placeholder="方案设计科学性"></el-input> -->
-            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider @change="calcScore" :min="0" :max="15" v-model="scientificity" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
@@ -74,7 +74,7 @@
           </div>
           <div class="source_right">
             <!-- <el-input @blur="calcScore" type="number" v-model="practicability" placeholder="方案实用性"></el-input> -->
-            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider @change="calcScore" :min="0" :max="25" v-model="practicability" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
@@ -85,14 +85,19 @@
           </div>
           <div class="source_right">
             <!-- <el-input v-model="innovation" @blur="calcScore" placeholder="方案创新性"></el-input> -->
-            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
+            <el-slider @change="calcScore" :min="0" :max="30" v-model="innovation" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
-          <div class="source_left"> </div>
+          <div class="source_left">
+            <div class="pass_item">
+              <el-radio v-model="radio" label="1">通过</el-radio>
+              <el-radio v-model="radio" label="2">不通过</el-radio>
+            </div>
+          </div>
           <div class="source_right">
             <div class="tips_box">
-              <div class="tips">总分</div><span class="nubmer">100</span>
+              <div class="tips">总分</div><span class="nubmer">{{score}}</span>
             </div>
           </div>
         </div>
@@ -110,12 +115,12 @@
         </div> -->
       </div>
     </div>
+    <!-- <div class="pass_item">
+      <el-radio v-model="radio" label="1">通过</el-radio>
+      <el-radio v-model="radio" label="2">不通过</el-radio>
+    </div> -->
     <div class="pass_contain">
       <PublicTitle title="评语"></PublicTitle>
-       <!-- <div class="pass_item">
-          <el-radio v-model="radio" label="1">通过</el-radio>
-          <el-radio v-model="radio" label="2">不通过</el-radio>
-        </div> -->
       <div class="comment_box">
         <el-input maxlength="200" style="width:412px;" @blur="calcScore" :rows="3" v-model="comments" type="textarea" placeholder="评语"></el-input>
         <div class="submit_btn_container">
@@ -181,27 +186,27 @@ export default {
       score: 0,
       // 通过
       radio: null,
-      value: 90
+      value: 0
     }
   },
 
   created () {
-    // this.getTeamDetail()
+    this.getTeamDetail()
   },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),
     formatTooltip (val) {
-      return val / 100
+      return val
     },
     calcScore () {
       let all = 0
       const reg = /(^[0-9]{1,3}$)|(^[0-9]{1,2}[.]{1}[0-9]{1,2}$)/
-      reg.test(this.integrity) ? (all = this.integrity * 100) : all = 0
-      reg.test(this.effect) && (all += (this.effect * 100))
-      reg.test(this.scientificity) && (all += (this.scientificity * 100))
-      reg.test(this.practicability) && (all += (this.practicability * 100))
-      reg.test(this.innovation) && (all += (this.innovation * 100))
-      this.score = all / 100
+      reg.test(this.integrity) ? (all = this.integrity) : all = 0
+      reg.test(this.effect) && (all += (this.effect))
+      reg.test(this.scientificity) && (all += (this.scientificity))
+      reg.test(this.practicability) && (all += (this.practicability))
+      reg.test(this.innovation) && (all += (this.innovation))
+      this.score = all
     },
     async prevewFile (attachmentId, file) {
       const patternFileExtension = /.([0-9a-z]+)(?:[?#]|$)/i
@@ -412,9 +417,9 @@ export default {
       align-items: flex-end;
       margin-top: 36px;
     }
-    .pass_item {
-      margin: 20px 0;
-    }
+  }
+  .pass_item {
+    // margin: 20px 0;
   }
 }
 </style>
