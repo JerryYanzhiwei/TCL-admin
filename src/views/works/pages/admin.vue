@@ -311,7 +311,7 @@ export default {
 .works_list_container {
   .filter_contain{
     display: flex;
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     p {
       width: 20%;
       color: #333333;
