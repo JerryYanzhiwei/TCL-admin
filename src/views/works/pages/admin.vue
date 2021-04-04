@@ -54,16 +54,16 @@
           </el-option>
         </el-select>
       </p>
-      <el-button @click="resetFilter" class="res">重置</el-button>
-      <el-button @click="filterSearch" type="primary">搜索</el-button>
+      <el-button @click="resetFilter" class="res" type="primary">重置</el-button>
+      <el-button @click="filterSearch" >搜索</el-button>
     </div>
-    <div class="process_banner">
+    <!-- <div class="process_banner">
       <el-tabs v-model="activeType" @tab-click="handleClick">
         <el-tab-pane label="初筛" name="0"></el-tab-pane>
         <el-tab-pane label="半决赛" name="1"></el-tab-pane>
         <el-tab-pane label="决赛" name="2"></el-tab-pane>
       </el-tabs>
-    </div>
+    </div> -->
     <el-table
       :data="tableData"
       stripe>
@@ -191,6 +191,22 @@ export default {
       userInfo: {}
     }
   },
+  watch: {
+    $route (val) {
+      this.pageForm = {
+        pageSize: 10,
+        pageNo: 1,
+        teamProgress: val.query.type,
+        directionId: null,
+        matchZone: null,
+        subjectId: null,
+        teamNo: null
+      }
+      this.activeType = val.query.type
+      console.log(this.pageForm)
+      this.getData()
+    }
+  },
   created () {
     this.userInfo = JSON.parse(sessionStorage.getItem('adminInfo'))
     this.getData()
@@ -295,8 +311,11 @@ export default {
 .works_list_container {
   .filter_contain{
     display: flex;
+    margin-bottom: 100px;
     p {
-      width: 15%;
+      width: 20%;
+      color: #333333;
+      font-size: 16px;
     }
   }
   .clickable {

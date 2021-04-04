@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="content_item file_item">
-          <p>附件</p>
+          <p class="blank">附件</p>
           <div v-show="item.attachmentType === 2" v-for="(item, index) in pageData.attachments" :key="index" class="work_name">
             <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
               <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-view"></i>{{item.attachmentFileName}}</span>
@@ -35,50 +35,68 @@
       <div class="score_main">
         <div class="score_item">
           <div class="source_left">
-            <span class="source_title">方案完整性:</span>
-            <span class="source_sub_title">方案结构完整，切题准确，提供明确的方案解决思路，无明显错误<span class="red_color">(满分15分)</span></span>
+            <!-- <span class="source_title">方案完整性:</span>
+            <span class="source_sub_title">方案结构完整，切题准确，提供明确的方案解决思路，无明显错误<span class="red_color">(满分15分)</span></span> -->
+            <span>维度1（满分5分）</span>
           </div>
           <div class="source_right">
-            <el-input @blur="calcScore" type="number" v-model="integrity" placeholder="方案完整性"></el-input>
+            <!-- <el-input @blur="calcScore" type="number" v-model="integrity" placeholder="方案完整性"></el-input> -->
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
-            <span class="source_title">数据有效性:</span>
-            <span class="source_sub_title">数据信息准确有效，对方案设计有支撑作用<span class="red_color">(满分15分)</span></span>
+            <!-- <span class="source_title">数据有效性:</span>
+            <span class="source_sub_title">数据信息准确有效，对方案设计有支撑作用<span class="red_color">(满分15分)</span></span> -->
+            <span>维度2（满分10分）</span>
           </div>
           <div class="source_right">
-            <el-input @blur="calcScore" type="number" v-model="effect" placeholder="数据有效性"></el-input>
+            <!-- <el-input @blur="calcScore" type="number" v-model="effect" placeholder="数据有效性"></el-input> -->
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
-            <span class="source_title">方案设计科学性:</span>
-            <span class="source_sub_title">有明确、适用的设计方法，采用了定性和定量手段,设计方法科学、严谨<span class="red_color">(满分20分)</span></span>
+            <!-- <span class="source_title">方案设计科学性:</span>
+            <span class="source_sub_title">有明确、适用的设计方法，采用了定性和定量手段,设计方法科学、严谨<span class="red_color">(满分20分)</span></span> -->
+            <span>维度3（满分15分）</span>
           </div>
           <div class="source_right">
-            <el-input @blur="calcScore" type="number" v-model="scientificity" placeholder="方案设计科学性"></el-input>
+            <!-- <el-input @blur="calcScore" type="number" v-model="scientificity" placeholder="方案设计科学性"></el-input> -->
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
-            <span class="source_title">方案实用性:</span>
-            <span class="source_sub_title">方案依据充分，联系实际情况，可落地实施<span class="red_color">(满分25分)</span></span>
+            <!-- <span class="source_title">方案实用性:</span>
+            <span class="source_sub_title">方案依据充分，联系实际情况，可落地实施<span class="red_color">(满分25分)</span></span> -->
+            <span>维度4（满分25分）</span>
           </div>
           <div class="source_right">
-            <el-input @blur="calcScore" type="number" v-model="practicability" placeholder="方案实用性"></el-input>
+            <!-- <el-input @blur="calcScore" type="number" v-model="practicability" placeholder="方案实用性"></el-input> -->
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
-            <span class="source_title">方案创新性:</span>
-            <span class="source_sub_title">方案存在创新理念，亮点突出<span class="red_color">(满分25分)</span></span>
+            <!-- <span class="source_title">方案创新性:</span>
+            <span class="source_sub_title">方案存在创新理念，亮点突出<span class="red_color">(满分25分)</span></span> -->
+            <span>维度5（满分30分）</span>
           </div>
           <div class="source_right">
-            <el-input v-model="innovation" @blur="calcScore" placeholder="方案创新性"></el-input>
+            <!-- <el-input v-model="innovation" @blur="calcScore" placeholder="方案创新性"></el-input> -->
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
+          <div class="source_left"> </div>
+          <div class="source_right">
+            <div class="tips_box">
+              <div class="tips">总分</div><span class="nubmer">100</span>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="score_item">
           <div class="source_left">评语</div>
           <div class="source_right text_area">
             <el-input maxlength="200" @blur="calcScore" :rows="3" v-model="comments" type="textarea" placeholder="评语"></el-input>
@@ -87,16 +105,23 @@
         <div class="score_item">
           <div class="source_left"></div>
           <div class="source_right">
-            <el-input :disabled="true" v-model="score" placeholder="综合评分"></el-input>
+            <el-slider v-model="value" :format-tooltip="formatTooltip"></el-slider>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="pass_contain">
-      <PublicTitle title="判定结果"></PublicTitle>
-      <div class="pass_item">
-        <el-radio v-model="radio" label="1">通过</el-radio>
-        <el-radio v-model="radio" label="2">不通过</el-radio>
+      <PublicTitle title="评语"></PublicTitle>
+       <!-- <div class="pass_item">
+          <el-radio v-model="radio" label="1">通过</el-radio>
+          <el-radio v-model="radio" label="2">不通过</el-radio>
+        </div> -->
+      <div class="comment_box">
+        <el-input maxlength="200" style="width:412px;" @blur="calcScore" :rows="3" v-model="comments" type="textarea" placeholder="评语"></el-input>
+        <div class="submit_btn_container">
+          <el-button @click="$router.go(-1)">返回</el-button>
+          <el-button type="primary" @click="submit">提交</el-button>
+        </div>
       </div>
     </div>
     <!-- 推荐级别 -->
@@ -119,10 +144,10 @@
           maxRows: 6
         }"></el-input>
     </div> -->
-    <div class="submit_btn_container">
+    <!-- <div class="submit_btn_container">
       <el-button type="primary" @click="submit">提交</el-button>
       <el-button @click="$router.go(-1)">返回</el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -155,7 +180,8 @@ export default {
       // 总分
       score: 0,
       // 通过
-      radio: null
+      radio: null,
+      value: 90
     }
   },
 
@@ -164,6 +190,9 @@ export default {
   },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),
+    formatTooltip (val) {
+      return val / 100
+    },
     calcScore () {
       let all = 0
       const reg = /(^[0-9]{1,3}$)|(^[0-9]{1,2}[.]{1}[0-9]{1,2}$)/
@@ -283,16 +312,29 @@ export default {
     font-weight: bold;
   }
   .content_container {
-    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
   .content_main {
     display: flex;
-    justify-content: space-between;
-    flex-flow: row wrap;
-    padding-top: 15px;
+    padding-top: 32px;
     .content_item {
       margin-bottom: 20px;
-      width: 30%;
+      margin-right: 150px;
+      p {
+        width: 170px;
+        height: 32px;
+        line-height: 32px;
+        background: #48B7FF;
+        border-radius: 14px;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .blank {
+        background: #fff;
+        color: #333333;
+      }
       &.file_item {
         color: #333;
       }
@@ -304,11 +346,12 @@ export default {
         .work_item {
           display: inline-block;
           width: 70%;
+          font-size: 16px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           cursor: pointer;
-          color: #dc1e32;
+          color: #FF0000;
         }
         .el-icon-download {
           margin-right: 10px;
@@ -318,15 +361,40 @@ export default {
     }
   }
   .score_main {
-    padding-top: 15px;
+    padding-top: 36px;
     .score_item {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 30px;
+      font-size: 18px;
+      font-weight: 400;
+      color: #333333;
       .source_left {
         width: 70%;
       }
-      .source_right {}
+      .source_right {
+        width: 30%;
+        .tips_box {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          .tips {
+            width: 119px;
+            height: 32px;
+            text-align: center;
+            line-height: 32px;
+            background: #48B7FF;
+            border-radius: 6px;
+            color: #fff;
+          }
+          .nubmer {
+            font-size: 36px;
+            font-weight: bold;
+            color: #48B7FF;
+            padding-left: 10px;
+          }
+        }
+      }
     }
   }
   .radio_Container {
@@ -338,6 +406,12 @@ export default {
     margin: 20px 0;
   }
   .pass_contain {
+    .comment_box {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 36px;
+    }
     .pass_item {
       margin: 20px 0;
     }

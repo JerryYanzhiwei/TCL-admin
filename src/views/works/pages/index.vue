@@ -22,7 +22,7 @@
         </el-select>
       </p> -->
       <p>
-        <span>课题：</span>
+        <span>方向：</span>
         <el-select size="mini" v-model="pageForm.subjectId" placeholder="请选择">
           <el-option
             v-for="item in subjectArr"
@@ -43,16 +43,16 @@
           </el-option>
         </el-select>
       </p>
-      <el-button @click="resetFilter" class="res">重置</el-button>
-      <el-button @click="filterSearch" type="primary">搜索</el-button>
+      <el-button @click="resetFilter" class="res" type="primary" style="background-color:#48B7FF;">重置</el-button>
+      <el-button @click="filterSearch">搜索</el-button>
     </div>
-    <div class="process_banner">
+    <!-- <div class="process_banner">
       <el-tabs v-model="activeType" @tab-click="handleClick">
         <el-tab-pane label="初筛" name="0"></el-tab-pane>
         <el-tab-pane label="半决赛" name="1"></el-tab-pane>
         <el-tab-pane label="决赛" name="2"></el-tab-pane>
       </el-tabs>
-    </div>
+    </div> -->
     <el-table
       width="100%"
       :data="tableData"
@@ -90,7 +90,7 @@
       </el-table-column> -->
       <el-table-column
         min-width="10%"
-        label="课题">
+        label="方向">
         <template slot-scope="scope">
           <el-popover width="200" trigger="hover" :content="scope.row.subjectName" placement="top">
             <div>{{scope.row.subjectName}}</div>
@@ -108,7 +108,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        min-width="20%"
+        min-width="10%"
         prop=""
         label="作品附件">
         <template slot-scope="scope">
@@ -127,6 +127,16 @@
         label="评分">
         <template slot-scope="scope">
           <span>{{scope.row.totalScore / 100}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        min-width="10%"
+        prop=""
+        label="判定结果">
+        <!-- slot-scope="scope" -->
+        <template >
+          <span>通过</span>
+          <span style="color:#FF0000;">不通过</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -184,6 +194,22 @@ export default {
     this.getData()
     this.getCategory()
   },
+  watch: {
+    $route (val) {
+      this.pageForm = {
+        pageSize: 10,
+        pageNo: 1,
+        teamProgress: val.query.type,
+        directionId: null,
+        matchZone: null,
+        subjectId: null,
+        teamNo: null
+      }
+      this.activeType = val.query.type
+      console.log(this.pageForm)
+      this.getData()
+    }
+  },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_CATEGORYS', 'GET_JUDGE_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE']),
     async prevewFile (attachmentId, file) {
@@ -231,6 +257,7 @@ export default {
     // 切换赛事类型
     handleClick (e) {
       // todo
+      console.log(e.name)
       this.pageForm = {
         pageSize: 10,
         pageNo: 1,
@@ -241,7 +268,7 @@ export default {
         teamNo: null
       }
       this.activeType = e.name
-      this.getData()
+      // this.getData()
     },
     // 点击评分
     setSource (row) {
@@ -286,8 +313,11 @@ export default {
   }
   .filter_contain{
     display: flex;
+    margin-bottom: 100px;
     p {
       width: 20%;
+      color: #333333;
+      font-size: 16px;
     }
   }
   .down_list {

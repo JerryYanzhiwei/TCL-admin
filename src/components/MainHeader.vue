@@ -1,10 +1,15 @@
 <template>
   <div class="main_header_container">
-    <div class="left_txt">TCL高校科创节</div>
+    <div class="left_txt">
+      <img :src="logo" alt="">
+      <div class="link"></div>
+      <span>TCL高校科创节</span>
+    </div>
     <div class="right">
       <span>{{adminInfo.username}}</span>
       <span class="line">|</span>
       <span class="btn" @click="showDialog">修改密码</span>
+      <span class="line">|</span>
       <div class="exit_btn"
         @click="exitLogin">退出</div>
     </div>
@@ -37,6 +42,7 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
+      logo: require('@/assets/images/logo.png'),
       adminInfo: {},
       dialogVisible: false,
       // true 管理员  false 评委
@@ -86,21 +92,30 @@ export default {
   justify-content: space-between;
   height: 100%;
   .left_txt {
+    display: flex;
+    align-items: center;
     color: #fff;
-    font-size: 20px;
-    font-weight: bold;
+    .link {
+      height: 90%;
+      padding: 0 1px;
+      margin: 0 15px;
+      background-color: #fff;
+    }
+    span {
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
   .right {
     display: flex;
     align-items: center;
-    color: #fff;
+    color: #FFFBFB;
+   font-size: 16px;
     .exit_btn {
       cursor: pointer;
-      margin: 0 20px;
-      font-size: 12px;
     }
     .line {
-      margin: 0 20px;
+      margin: 0 14px;
     }
     .btn {
       cursor: pointer;

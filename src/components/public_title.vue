@@ -17,22 +17,21 @@ export default {
 <style lang="scss" scoped>
   .public_title {
     position: relative;
-
-    padding-left: 13px;
-
     font-size: 18px;
     font-weight: bold;
-    &::after {
-      content: '';
-      display: block;
-      clear: both;
-      position: absolute;
-      top: 5px;
-      left: 0;
+    border-bottom: 2px solid #F56C6C;
+    max-width: 80px;
+    // &::after {
+    //   content: '';
+    //   display: block;
+    //   clear: both;
+    //   position: absolute;
+    //   top: 5px;
+    //   left: 0;
 
-      width: 3px;
-      height: 15px;
-      background-color: #dc1e32;
-    }
+    //   width: 3px;
+    //   height: 15px;
+    //   background-color: #dc1e32;
+    // }
   }
 </style>
