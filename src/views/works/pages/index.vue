@@ -268,7 +268,7 @@ export default {
         teamNo: null
       }
       this.activeType = e.name
-      // this.getData()
+      this.getData()
     },
     // 点击评分
     setSource (row) {
