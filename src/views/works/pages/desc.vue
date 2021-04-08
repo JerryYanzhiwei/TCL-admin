@@ -171,15 +171,15 @@ export default {
         level: ''
       },
       // 创新性
-      integrity: '',
+      integrity: 0,
       // 实用性
-      effect: '',
+      effect: 0,
       // 安全性
-      scientificity: '',
+      scientificity: 0,
       // 通用性
-      practicability: '',
+      practicability: 0,
       // 价值
-      innovation: '',
+      innovation: 0,
       // 评语
       comments: '',
       // 总分
@@ -236,26 +236,26 @@ export default {
     },
     // 提交
     async submit () {
-      if (!this.integrity) {
-        this.$message.error('请填写方案完整性评分')
-        return
-      }
-      if (!this.effect) {
-        this.$message.error('请填写数据有效性')
-        return
-      }
-      if (!this.scientificity) {
-        this.$message.error('请填写方案设计科学性')
-        return
-      }
-      if (!this.practicability) {
-        this.$message.error('请填写方案实用性')
-        return
-      }
-      if (!this.innovation) {
-        this.$message.error('请填写方案创新性')
-        return
-      }
+      // if (!this.integrity) {
+      //   this.$message.error('请填写方案完整性评分')
+      //   return
+      // }
+      // if (!this.effect) {
+      //   this.$message.error('请填写数据有效性')
+      //   return
+      // }
+      // if (!this.scientificity) {
+      //   this.$message.error('请填写方案设计科学性')
+      //   return
+      // }
+      // if (!this.practicability) {
+      //   this.$message.error('请填写方案实用性')
+      //   return
+      // }
+      // if (!this.innovation) {
+      //   this.$message.error('请填写方案创新性')
+      //   return
+      // }
       if (!this.radio) {
         this.$message.error('请选择判定结果')
         return

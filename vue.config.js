@@ -32,20 +32,20 @@ module.exports = {
   },
   devServer: {
     port: 8085 // 端口
-  },
-  configureWebpack: {
-    optimization: {
-      minimizer: [
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              drop_console: false,//console
-              drop_debugger: false,
-              pure_funcs: ['console.log']//移除console
-            }
-          }
-        })
-      ]
-    }
   }
+  // configureWebpack: {
+  //   optimization: {
+  //     minimizer: [
+  //       new UglifyJsPlugin({
+  //         uglifyOptions: {
+  //           compress: {
+  //             drop_console: false,//console
+  //             drop_debugger: false,
+  //             pure_funcs: ['console.log']//移除console
+  //           }
+  //         }
+  //       })
+  //     ]
+  //   }
+  // }
 }
