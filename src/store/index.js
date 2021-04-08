@@ -65,6 +65,15 @@ export default new Vuex.Store({
       const { data: res } = await axios.put(`/admin/password?password=${data.password}`)
       return res
     },
+    // 管理员发送学生邮件
+    async PUT_JUDGE_NOTIFY ({ commit }, data = {}) {
+      let str = ''
+      data.teamNo.map(item => {
+        str += '&teamNo=' + item
+      })
+      const { data: res } = await axios.put(`/admin/team/judge/notify?email=${data.email}&teamProgress=${data.teamProgress}${str}`)
+      return res
+    },
     // 下载学生账号
     async GET_ACCOUNT_LIST ({ commit }, data = {}) {
       const { data: res } = await axios.get('/admin/account/dowload')

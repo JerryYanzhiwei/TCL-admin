@@ -4,7 +4,11 @@
     <div v-if="userInfo.superAdmin === 1" class="down_list">
       <el-button @click="downloadAccount" type="primary">下载注册列表<i class="el-icon-download el-icon--right"></i></el-button>
       <el-button @click="downloadTeamList" type="primary">下载队伍列表<i class="el-icon-download el-icon--right"></i></el-button>
-      <el-button @click="sendEmail" type="primary">发送提醒邮箱<i class="el-icon-s-promotion el-icon--right"></i></el-button>
+      <div style="marginTop: 20px">
+        <span>邮箱地址: </span>
+        <el-input v-model="emailAddress" style="width: 20%; marginRight: 10px" size="mini"/>
+        <el-button @click="sendEmail" type="primary">发送提醒邮箱<i class="el-icon-s-promotion el-icon--right"></i></el-button>
+      </div>
     </div>
     <div class="filter_contain">
       <p>
@@ -159,24 +163,23 @@
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>是否对已选中队伍发送提醒邮件</span>
+      width="30%">
+      <span v-if="!singleSubject">您已选择不同赛题方向的作品，确认后将进行发送</span>
+      <span v-else>您已选择了{{subjectName}}方向的作品，确认后将进行发送</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="confirmSend">确 定</el-button>
       </span>
     </el-dialog>
 
     <el-dialog
       title="提示"
       :visible.sync="dialogReset"
-      width="30%"
-      :before-close="handleClose">
+      width="30%">
       <span>是否确认重置该队成绩</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogReset = false">取 消</el-button>
-        <el-button type="primary" @click="dialogReset = false">确 定</el-button>
+        <el-button type="primary" @click="resetConfirm">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -222,7 +225,11 @@ export default {
       userInfo: {},
       selectTeam: [],
       dialogVisible: false,
-      dialogReset: false
+      dialogReset: false,
+      curRow: null,
+      singleSubject: null,
+      emailAddress: '',
+      subjectName: ''
     }
   },
   watch: {
@@ -238,16 +245,16 @@ export default {
       }
       this.activeType = val.query.type
       console.log(this.pageForm)
-      // this.getData()
+      this.getData()
     }
   },
   created () {
     this.userInfo = JSON.parse(sessionStorage.getItem('adminInfo'))
     this.getData()
-    // this.getCategory()
+    this.getCategory()
   },
   methods: {
-    ...mapActions(['PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE']),
+    ...mapActions(['PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE', 'PUT_JUDGE_NOTIFY']),
     async getFileDown (attachmentId) {
       await this.GET_DOWN_FILE(attachmentId)
     },
@@ -317,7 +324,6 @@ export default {
     },
     // 通过
     async pass (row, status) {
-      console.log('通过:', row)
       const teamProgress = status ? Number(this.activeType) + 1 : Number(this.activeType) - 1
       const res = await this.PUT_EDIT_PROCESS({
         teamProgress: teamProgress,
@@ -330,9 +336,9 @@ export default {
     },
     // 获取页面数据
     async getData () {
-      // const params = this.pageForm
-      // const res = await this.GET_TEAM_LIST(params)
-      const res = { result: '0', msg: 'Success', data: { pageSize: 10, pageNo: 1, total: 22, recordNumber: 213, records: [{ teamNo: '0002', teamName: '江湖战队', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1003', provinceCode: '14', totalScore: 3000, attachments: [{ attachmentId: 500, attachmentType: 2, attachmentFileName: 'README.md' }] }, { teamNo: '0003', teamName: '汤臣一品', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1004', provinceCode: '22', totalScore: null, attachments: [{ attachmentId: 504, attachmentType: 2, attachmentFileName: '汤臣一品   智慧家庭-未来家居.docx' }] }, { teamNo: '0004', teamName: '实事求是', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1004', provinceCode: '18', totalScore: null, attachments: [{ attachmentId: 489, attachmentType: 2, attachmentFileName: '0004实事求是队-项目计划书.pdf' }] }, { teamNo: '0005', teamName: 'Starlink', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [] }, { teamNo: '0006', teamName: '守住发际线队', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 367, attachmentType: 2, attachmentFileName: '守住发际线队  红外室内定位.doc' }] }, { teamNo: '0007', teamName: '三只小猪', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 317, attachmentType: 2, attachmentFileName: '三只小猪基于IoT的节能自发电智能主卧系统项目计划书.docx' }] }, { teamNo: '0008', teamName: '还有这么个', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 156, attachmentType: 2, attachmentFileName: '项目计划书.pdf' }] }, { teamNo: '0009', teamName: '花园宝宝', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 497, attachmentType: 2, attachmentFileName: '花园宝宝+基于深度学习的电影 CTR 预测.pdf' }] }, { teamNo: '0010', teamName: '底层学渣在线找虐', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1006', provinceCode: '28', totalScore: null, attachments: [] }, { teamNo: '0011', teamName: 'RUSH_B', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1006', provinceCode: '28', totalScore: null, attachments: [{ attachmentId: 309, attachmentType: 2, attachmentFileName: 'RUSH_B+CTR预测.zip' }] }], startIndex: 1, prePage: 1, nextPage: 2 } }
+      const params = this.pageForm
+      const res = await this.GET_TEAM_LIST(params)
+      // const res = { result: '0', msg: 'Success', data: { pageSize: 10, pageNo: 1, total: 22, recordNumber: 213, records: [{ teamNo: '0002', teamName: '江湖战队', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1003', provinceCode: '14', totalScore: 3000, attachments: [{ attachmentId: 500, attachmentType: 2, attachmentFileName: 'README.md' }] }, { teamNo: '0003', teamName: '汤臣一品', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1004', provinceCode: '22', totalScore: null, attachments: [{ attachmentId: 504, attachmentType: 2, attachmentFileName: '汤臣一品   智慧家庭-未来家居.docx' }] }, { teamNo: '0004', teamName: '实事求是', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1004', provinceCode: '18', totalScore: null, attachments: [{ attachmentId: 489, attachmentType: 2, attachmentFileName: '0004实事求是队-项目计划书.pdf' }] }, { teamNo: '0005', teamName: 'Starlink', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [] }, { teamNo: '0006', teamName: '守住发际线队', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 367, attachmentType: 2, attachmentFileName: '守住发际线队  红外室内定位.doc' }] }, { teamNo: '0007', teamName: '三只小猪', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 317, attachmentType: 2, attachmentFileName: '三只小猪基于IoT的节能自发电智能主卧系统项目计划书.docx' }] }, { teamNo: '0008', teamName: '还有这么个', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '智慧家庭-未来场景', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 156, attachmentType: 2, attachmentFileName: '项目计划书.pdf' }] }, { teamNo: '0009', teamName: '花园宝宝', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1001', provinceCode: '1', totalScore: null, attachments: [{ attachmentId: 497, attachmentType: 2, attachmentFileName: '花园宝宝+基于深度学习的电影 CTR 预测.pdf' }] }, { teamNo: '0010', teamName: '底层学渣在线找虐', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1006', provinceCode: '28', totalScore: null, attachments: [] }, { teamNo: '0011', teamName: 'RUSH_B', opusName: null, categoryName: 'xx1', directionName: 'xxx1', subjectName: '大数据挖掘和算法-电影CTR预测', matchZone: '1006', provinceCode: '28', totalScore: null, attachments: [{ attachmentId: 309, attachmentType: 2, attachmentFileName: 'RUSH_B+CTR预测.zip' }] }], startIndex: 1, prePage: 1, nextPage: 2 } }
       if (res.result === '0' && res.data) {
         console.log(res.data.records)
         this.pageData = res.data
@@ -340,12 +346,9 @@ export default {
       }
     },
 
-    // 多选发送右键
+    // 多选队伍
     handleSelectionChange (val) {
-      this.selectTeam = []
-      val.map(item => {
-        this.selectTeam.push(item.teamNo)
-      })
+      this.selectTeam = val
     },
 
     // 发送右键
@@ -354,11 +357,47 @@ export default {
         this.$message.error('请选择要发送提醒邮件的队伍')
         return
       }
+      if (!this.emailAddress) {
+        this.$message.error('请输入邮箱地址')
+        return
+      }
+      const len = this.selectTeam.length
+      const direct = this.selectTeam[0].subjectName
+      const arr = this.selectTeam.filter(item => item.subjectName === direct)
+      this.singleSubject = arr.length === len
+      this.subjectName = this.selectTeam[0].subjectName
       this.dialogVisible = true
     },
+
+    async confirmSend () {
+      const teamArr = []
+      this.selectTeam.map(item => {
+        teamArr.push(item.teamNo)
+      })
+      const res = await this.PUT_JUDGE_NOTIFY({
+        email: this.emailAddress,
+        teamProgress: this.activeType,
+        teamNo: teamArr
+      })
+      this.$message.success(res.msg)
+      this.dialogVisible = false
+    },
+
     // 重置成绩
-    resetScore () {
+    resetScore (row) {
+      this.curRow = row
       this.dialogReset = true
+    },
+
+    // 确认重置
+    async resetConfirm () {
+      const res = await this.PUT_EDIT_PROCESS({
+        teamProgress: this.activeType,
+        teamNo: this.curRow.teamNo
+      })
+      this.$message.success(res.msg)
+      this.dialogReset = false
+      this.getData()
     }
 
   }
