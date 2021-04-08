@@ -39,6 +39,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+let fullPath = ''
 export default {
   data () {
     return {
@@ -57,7 +58,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    this.fullPath = from.fullPath
+    fullPath = from.fullPath || ''
     next()
   },
   methods: {
@@ -92,7 +93,7 @@ export default {
         const res = await this.POST_LOGIN(this.loginForm)
         if (res.result === '0' && res.data) {
           sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-          if (this.fullPath) {
+          if (fullPath) {
             this.$router.push(this.fullPath)
           } else {
             this.$router.push('/works/teamList')
@@ -104,7 +105,7 @@ export default {
         const res = await this.POST_CODE_LOGIN(this.loginForm)
         if (res.result === '0' && res.data) {
           sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-          if (this.fullPath) {
+          if (fullPath) {
             this.$router.push(this.fullPath)
           } else {
             this.$router.push('/works/teamList')
