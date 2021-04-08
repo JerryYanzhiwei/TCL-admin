@@ -153,10 +153,12 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      small
-      :page-size="pageData.pageSize"
+      @size-change="handleSizeExamChange"
       @current-change="pageChange"
-      layout="prev, pager, next"
+      :current-page="pageData.pageNo"
+      layout="total, sizes, prev, pager, next"
+      :page-size="pageData.pageSize"
+      :page-sizes="[10, 30, 50, 100]"
       :total="pageData.recordNumber">
     </el-pagination>
 
@@ -211,7 +213,7 @@ export default {
         }
       ],
       pageForm: {
-        pageSize: 10,
+        pageSize: 30,
         pageNo: 1,
         teamProgress: 0,
         directionId: null,
@@ -235,7 +237,7 @@ export default {
   watch: {
     $route (val) {
       this.pageForm = {
-        pageSize: 10,
+        pageSize: 30,
         pageNo: 1,
         teamProgress: val.query.type,
         directionId: null,
@@ -271,6 +273,11 @@ export default {
       attachmentId = attachmentId + fileExtension[0]
       await this.PREVIEW_DOWN_FILE(attachmentId)
     },
+    // 分页个数
+    handleSizeExamChange (val) {
+      this.pageForm.pageSize = val
+      this.getData()
+    },
     // 搜索
     filterSearch () {
       // todo
@@ -302,7 +309,7 @@ export default {
     // 切换赛事类型
     handleClick (e) {
       this.pageForm = {
-        pageSize: 10,
+        pageSize: 30,
         pageNo: 1,
         teamProgress: e.name,
         directionId: null,
