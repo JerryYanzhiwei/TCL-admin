@@ -58,6 +58,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
+    console.log(from, 'from')
     fullPath = from.fullPath || ''
     next()
   },
@@ -92,27 +93,29 @@ export default {
       const res = this.activeType === '0' ? await this.POST_JUDGE_LOGIN(this.loginForm) : await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
       if (res.result === '0' && res.data) {
         sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
+        console.log(fullPath, 'fullPath')
         if (fullPath && fullPath !== '/') {
-          this.$router.push(this.fullPath)
+          this.$router.push({
+            path: '/works/desc',
+            query: {
+              teamNo: this.getQueryString('teamNo'),
+              teamProgress: this.getQueryString('teamProgress')
+            }
+          })
         } else {
           this.$router.push('/works/list')
         }
       }
-      // if (this.activeType === '0') {
-      //   const res = await this.POST_JUDGE_LOGIN(this.loginForm)
-      //   if (res.result === '0' && res.data) {
-      //     this.$router.push('/works/list')
-      //     sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-      //   }
-      // }
-      // // 验证码登录
-      // if (this.activeType === '1') {
-      //   const res = await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
-      //   if (res.result === '0' && res.data) {
-      //     this.$router.push('/works/list')
-      //     sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-      //   }
-      // }
+    },
+
+    getQueryString (name) {
+      fullPath = fullPath.replace('?', '&')
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
+      var r = fullPath.substr(1).match(reg)
+      if (r != null) {
+        return decodeURIComponent(r[2])
+      }
+      return ''
     }
   }
 }

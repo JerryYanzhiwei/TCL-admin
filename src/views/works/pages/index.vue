@@ -272,7 +272,7 @@ export default {
     },
     // 点击评分
     setSource (row) {
-      console.log('row:', row)
+      sessionStorage.setItem('teamInfo', JSON.stringify(row))
       this.$router.push({
         path: '/works/desc',
         query: {

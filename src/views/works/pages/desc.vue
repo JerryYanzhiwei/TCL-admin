@@ -1,6 +1,11 @@
 <template>
   <div class="works_desc_container">
     <!-- <div class="page_title">评委评分功能</div> -->
+    <!-- <div class="content_container">
+      <PublicTitle title="队伍名称"></PublicTitle>
+      <div>
+      </div>
+    </div> -->
     <div class="content_container">
       <PublicTitle title="作品附件"></PublicTitle>
       <div class="content_main">
