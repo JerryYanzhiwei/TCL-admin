@@ -147,7 +147,7 @@
           <!-- <PublicButton v-if="activeType !== '2'" @clickHandle="pass(scope.row, 1)">通过</PublicButton>
           <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
           <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
-          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="pass(scope.row, 0)">不通过</span>
+          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
           <span style="marginLeft: 10px" class="clickable" @click="resetScore">重置</span>
         </template>
       </el-table-column>
@@ -328,6 +328,15 @@ export default {
         path: '/works/desc',
         query: {}
       })
+    },
+    open (row, status) {
+      this.$confirm('确认后将回退到上一个评审阶段', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.submit(row, status)
+      }).catch(() => {})
     },
     // 通过
     async pass (row, status) {

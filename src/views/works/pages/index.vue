@@ -272,6 +272,9 @@ export default {
     },
     // 点击评分
     setSource (row) {
+      if (row.judgeScoreState === 1) {
+        return
+      }
       sessionStorage.setItem('teamInfo', JSON.stringify(row))
       this.$router.push({
         path: '/works/desc',
