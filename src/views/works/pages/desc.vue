@@ -9,7 +9,7 @@
     <div class="content_container">
       <PublicTitle title="作品附件"></PublicTitle>
       <div class="content_main">
-        <div class="content_item file_item">
+        <!-- <div class="content_item file_item">
           <p>作品说明书</p>
           <div v-show="item.attachmentType === 0" v-for="(item, index) in pageData.attachments" :key="index" class="work_name">
             <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
@@ -24,9 +24,9 @@
               <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-view"></i>{{item.attachmentFileName}}</span>
             </el-tooltip>
           </div>
-        </div>
+        </div> -->
         <div class="content_item file_item">
-          <p class="blank">附件</p>
+          <p class="">附件</p>
           <div v-show="item.attachmentType === 2" v-for="(item, index) in pageData.attachments" :key="index" class="work_name">
             <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
               <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-view"></i>{{item.attachmentFileName}}</span>
@@ -196,7 +196,7 @@ export default {
   },
 
   created () {
-    this.getTeamDetail()
+    // this.getTeamDetail()
   },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),

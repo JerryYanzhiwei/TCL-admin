@@ -148,7 +148,7 @@
           <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
           <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
           <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
-          <span style="marginLeft: 10px" class="clickable" @click="resetScore">重置</span>
+          <span style="marginLeft: 10px" class="clickable" @click="resetScore(scope.row)">重置</span>
         </template>
       </el-table-column>
     </el-table>
@@ -335,7 +335,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.submit(row, status)
+        this.pass(row, status)
       }).catch(() => {})
     },
     // 通过
