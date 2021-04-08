@@ -40,6 +40,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+let fullPath = ''
 export default {
   data () {
     return {
@@ -55,6 +56,10 @@ export default {
         password: ''
       }
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    fullPath = from.fullPath || ''
+    next()
   },
   methods: {
     ...mapActions(['POST_JUDGE_LOGIN', 'POST_JUDGE_CODE_LOGIN', 'GET_CODE']),
@@ -83,22 +88,31 @@ export default {
         this.$message.error('请输入正确的手机号码')
         return
       }
-      // 账号密码登录
-      if (this.activeType === '0') {
-        const res = await this.POST_JUDGE_LOGIN(this.loginForm)
-        if (res.result === '0' && res.data) {
+      // 账号密码登录 0 账号登录  1 验证码登录
+      const res = this.activeType === '0' ? await this.POST_JUDGE_LOGIN(this.loginForm) : await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
+      if (res.result === '0' && res.data) {
+        sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
+        if (fullPath && fullPath !== '/') {
+          this.$router.push(this.fullPath)
+        } else {
           this.$router.push('/works/list')
-          sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
         }
       }
-      // 验证码登录
-      if (this.activeType === '1') {
-        const res = await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
-        if (res.result === '0' && res.data) {
-          this.$router.push('/works/list')
-          sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-        }
-      }
+      // if (this.activeType === '0') {
+      //   const res = await this.POST_JUDGE_LOGIN(this.loginForm)
+      //   if (res.result === '0' && res.data) {
+      //     this.$router.push('/works/list')
+      //     sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
+      //   }
+      // }
+      // // 验证码登录
+      // if (this.activeType === '1') {
+      //   const res = await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
+      //   if (res.result === '0' && res.data) {
+      //     this.$router.push('/works/list')
+      //     sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
+      //   }
+      // }
     }
   }
 }

@@ -234,6 +234,15 @@ export default {
       }
       console.log(res, '队伍详情')
     },
+    open () {
+      this.$confirm('是否确认提交, 提交后将不可更改', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.submit()
+      }).catch(() => {})
+    },
     // 提交
     async submit () {
       // if (!this.integrity) {

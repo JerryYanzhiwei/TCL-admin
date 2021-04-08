@@ -39,7 +39,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-let fullPath = ''
 export default {
   data () {
     return {
@@ -56,10 +55,6 @@ export default {
       },
       fullPath: ''
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    fullPath = from.fullPath || ''
-    next()
   },
   methods: {
     ...mapActions(['POST_LOGIN', 'POST_CODE_LOGIN', 'GET_CODE']),
@@ -92,26 +87,16 @@ export default {
       if (this.activeType === '0') {
         const res = await this.POST_LOGIN(this.loginForm)
         if (res.result === '0' && res.data) {
-          console.log(fullPath)
           sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-          if (fullPath && fullPath !== '/') {
-            this.$router.push(this.fullPath)
-          } else {
-            this.$router.push('/works/teamList')
-          }
+          this.$router.push('/works/teamList')
         }
       }
       // 验证码登录
       if (this.activeType === '1') {
         const res = await this.POST_CODE_LOGIN(this.loginForm)
         if (res.result === '0' && res.data) {
-          console.log(fullPath)
           sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
-          if (fullPath && fullPath !== '/') {
-            this.$router.push(this.fullPath)
-          } else {
-            this.$router.push('/works/teamList')
-          }
+          this.$router.push('/works/teamList')
         }
       }
     }
