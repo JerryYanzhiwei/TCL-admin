@@ -1,9 +1,9 @@
 <template>
   <div class="works_desc_container">
-    <!-- <div class="page_title">评委评分功能</div> -->
     <!-- <div class="content_container">
       <PublicTitle title="队伍名称"></PublicTitle>
       <div>
+        <span></span>
       </div>
     </div> -->
     <div class="content_container">
