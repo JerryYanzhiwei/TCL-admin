@@ -1,11 +1,11 @@
 <template>
   <div class="works_desc_container">
-    <!-- <div class="content_container">
+    <div class="content_container">
       <PublicTitle title="队伍名称"></PublicTitle>
       <div>
-        <span></span>
+        <span>{{pageData.teamName}}</span>
       </div>
-    </div> -->
+    </div>
     <div class="content_container">
       <PublicTitle title="作品附件"></PublicTitle>
       <div class="content_main">
@@ -196,7 +196,7 @@ export default {
   },
 
   created () {
-    // this.getTeamDetail()
+    this.getTeamDetail()
   },
   methods: {
     ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),

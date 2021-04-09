@@ -76,7 +76,7 @@ export default new Vuex.Store({
     },
     // 管理员重置成绩
     async PUT_RESET_SCORE ({ commit }, data = {}) {
-      const { data: res } = await axios.put('/admin/team/clear/score', data)
+      const { data: res } = await axios.put(`/admin/team/clear/score?teamProgress=${data.teamProgress}&teamNo=${data.teamNo}`)
       return res
     },
     // 下载学生账号
