@@ -129,16 +129,15 @@
           <span>{{scope.row.totalScore / 100}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         min-width="10%"
         prop=""
         label="判定结果">
-        <!-- slot-scope="scope" -->
         <template >
           <span>通过</span>
           <span style="color:#FF0000;">不通过</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         min-width="10%"
         prop=""

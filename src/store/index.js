@@ -74,6 +74,11 @@ export default new Vuex.Store({
       const { data: res } = await axios.put(`/admin/team/judge/notify?email=${data.email}&teamProgress=${data.teamProgress}${str}`)
       return res
     },
+    // 管理员重置成绩
+    async PUT_RESET_SCORE ({ commit }, data = {}) {
+      const { data: res } = await axios.put('/admin/team/clear/score', data)
+      return res
+    },
     // 下载学生账号
     async GET_ACCOUNT_LIST ({ commit }, data = {}) {
       const { data: res } = await axios.get('/admin/account/dowload')

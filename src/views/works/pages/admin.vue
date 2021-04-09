@@ -256,7 +256,7 @@ export default {
     this.getCategory()
   },
   methods: {
-    ...mapActions(['PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE', 'PUT_JUDGE_NOTIFY']),
+    ...mapActions(['PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE', 'PUT_JUDGE_NOTIFY', 'PUT_RESET_SCORE']),
     async getFileDown (attachmentId) {
       await this.GET_DOWN_FILE(attachmentId)
     },
@@ -407,7 +407,7 @@ export default {
 
     // 确认重置
     async resetConfirm () {
-      const res = await this.PUT_EDIT_PROCESS({
+      const res = await this.PUT_RESET_SCORE({
         teamProgress: this.activeType,
         teamNo: this.curRow.teamNo
       })
