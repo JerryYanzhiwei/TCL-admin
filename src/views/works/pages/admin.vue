@@ -167,7 +167,7 @@
       :visible.sync="dialogVisible"
       width="30%">
       <span v-if="!singleSubject">您已选择不同赛题方向的作品，确认后将进行发送</span>
-      <span v-else>您已选择了{{subjectName}}方向的作品，确认后将进行发送</span>
+      <span v-else>您已选择了【{{subjectName}}】方向的作品，确认后将进行发送</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirmSend">确 定</el-button>
