@@ -2,10 +2,42 @@
   <div class="works_desc_container">
     <div class="content_container">
       <PublicTitle title="队伍名称"></PublicTitle>
-      <div>
+      <div class="team_info">
         <span>{{pageData.teamName}}</span>
       </div>
     </div>
+    <!-- 队伍成员 -->
+    <div class="content_container">
+       <PublicTitle title="队伍成员"></PublicTitle>
+       <!-- 队伍成员 -->
+      <div v-if="pageData" class="member_contain">
+        <div v-for="(item, index) in pageData.teamMembers" :key="index" class="member_item">
+          <div class="member_name">
+            <i class="iconfont icon-shouhuoren"></i>
+            {{item.name}}
+          </div>
+          <div class="item_contain">
+            <p class="item_detail">
+              <span class="title">手机号：</span>
+              <span class="detail">{{item.phone}}</span>
+            </p>
+            <p class="item_detail">
+              <span class="title">邮箱：</span>
+              <span class="detail">{{item.email}}</span>
+            </p>
+            <p class="item_detail">
+              <span class="title">学校：</span>
+              <span class="detail">{{item.school}}</span>
+            </p>
+            <p class="item_detail">
+              <span class="title">专业：</span>
+              <span class="detail">{{item.profession}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 作品附件 -->
     <div class="content_container">
       <PublicTitle title="作品附件"></PublicTitle>
       <div class="content_main">
@@ -229,6 +261,7 @@ export default {
         teamNo: this.$route.query.teamNo,
         teamProgress: this.$route.query.teamProgress
       })
+      // const res = { result: '0', msg: 'Success', data: { teamNo: '0003', teamName: '汤臣一品', progress: null, comments: null, totalScore: null, teamMembers: [{ teamNo: '0003', teamMemberId: 3, name: '杨泽林', phone: '17395545631', email: '2627244069@qq.com', school: '宁夏工商职业技术学院', profession: '金融管理', grade: '大二', leaveMessege: null }, { teamNo: '0003', teamMemberId: 66, name: '崔兴刚', phone: '18792197141', email: '1839753305@qq.com', school: '中国石油大学（华东）', profession: '机械类', grade: '大一', leaveMessege: '我是来自中国石油大学的学生，申请加入队伍，希望通过比赛提升自己。绝不划水。' }, { teamNo: '0003', teamMemberId: 84, name: '杜文超', phone: '18739634180', email: 'dwcdwc2020@163.com', school: '宁夏大学', profession: '电子信息类', grade: null, leaveMessege: '共创辉煌' }, { teamNo: '0003', teamMemberId: 87, name: '冯宇轩', phone: '19122142280', email: 'iacfyx@qq.com', school: '重庆城市科技学院', profession: '建筑工程技术', grade: null, leaveMessege: '一起努力拿大奖哈哈哈' }, { teamNo: '0003', teamMemberId: 174, name: '马金虎', phone: '13259502975', email: '3304546576@qq.com', school: '宁夏大学', profession: '电子信息工程', grade: null, leaveMessege: 'qq3304546576' }, { teamNo: '0003', teamMemberId: 451, name: '彭湘怡', phone: '18281937051', email: '1981206006@qq.com', school: '成都理工大学', profession: '投资学', grade: null, leaveMessege: '态度认真' }], scoreDimensions: [], attachments: [{ attachmentId: 504, attachmentType: 2, attachmentFileName: '汤臣一品   智慧家庭-未来家居.docx' }] } }
       if (res.result === '0' && res.data) {
         this.comments = res.data.comments
         this.score = res.data.totalScore / 100 || 0
@@ -332,6 +365,12 @@ export default {
   }
   .content_container {
     padding-bottom: 20px;
+    .team_info {
+      margin-top: 20px;
+
+      font-size: 16px;
+      font-weight: 600;
+    }
   }
   .content_main {
     display: flex;
@@ -434,6 +473,68 @@ export default {
   }
   .pass_item {
     // margin: 20px 0;
+  }
+  .member_contain {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 24px;
+    margin-top: -.05rem;
+    .member_item {
+      position: relative;
+      width: 250px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      margin-right: 20px;
+
+      background: #fff;
+      border-radius: 10px;
+      transition: all .2s linear;
+      box-shadow: 0px 0px 9px 0px rgba(51, 51, 51, 0.25);
+      // &:nth-child(3n + 1) {
+      //   margin-right: 0;
+      // }
+      &:hover {
+        box-shadow: 0 15px 30px rgba(0,0,0,.1);
+        transform: translate3d(0,-2px,0);
+      }
+      .member_name {
+        height: 57px;
+        padding-top: 18px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 400;
+        color: #333;
+        i {
+          margin-right: 10px;
+          color: #333;
+        }
+      }
+      .item_contain {
+        padding: 0 20px;
+
+        .item_detail {
+          padding-bottom: 17px;
+          font-size: 14px;
+          color: #333;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      .btn_contain {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+
+        background: #dc1e32;
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFFFFF;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
