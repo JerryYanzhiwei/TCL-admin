@@ -71,7 +71,7 @@ export default new Vuex.Store({
       data.teamNo.map(item => {
         str += '&teamNo=' + item
       })
-      const { data: res } = await axios.put(`/admin/team/judge/notify?email=${data.email}&teamProgress=${data.teamProgress}${str}`)
+      const { data: res } = await axios.put(`/admin/team/judge/notify?judgeUserName=${data.judgeUserName}&email=${data.email}&teamProgress=${data.teamProgress}${str}`)
       return res
     },
     // 管理员重置成绩

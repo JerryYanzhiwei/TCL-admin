@@ -18,20 +18,20 @@
           </div>
           <div class="item_contain">
             <p class="item_detail">
-              <span class="title">手机号：</span>
-              <span class="detail">{{item.phone}}</span>
-            </p>
-            <p class="item_detail">
-              <span class="title">邮箱：</span>
-              <span class="detail">{{item.email}}</span>
-            </p>
-            <p class="item_detail">
               <span class="title">学校：</span>
               <span class="detail">{{item.school}}</span>
             </p>
             <p class="item_detail">
               <span class="title">专业：</span>
               <span class="detail">{{item.profession}}</span>
+            </p>
+            <p class="item_detail">
+              <span class="title">学历：</span>
+              <span class="detail">{{item.educational}}</span>
+            </p>
+            <p class="item_detail">
+              <span class="title">毕业时间：</span>
+              <span class="detail">{{item.educationalYear}}</span>
             </p>
           </div>
         </div>
@@ -61,7 +61,8 @@
           <p class="">附件</p>
           <div v-show="item.attachmentType === 2" v-for="(item, index) in pageData.attachments" :key="index" class="work_name">
             <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
-              <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-view"></i>{{item.attachmentFileName}}</span>
+              <!-- <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-download"></i>{{item.attachmentFileName}}</span> -->
+              <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="getFileDown(item.attachmentId)" class="el-icon-download"></i>{{item.attachmentFileName}}</span>
             </el-tooltip>
           </div>
         </div>
@@ -128,8 +129,8 @@
         <div class="score_item">
           <div class="source_left">
             <div class="pass_item">
-              <el-radio v-model="radio" label="1">通过</el-radio>
-              <el-radio v-model="radio" label="2">不通过</el-radio>
+              <el-radio size="medium" v-model="radio" label="1">通过</el-radio>
+              <el-radio size="medium" v-model="radio" label="2">不通过</el-radio>
             </div>
           </div>
           <div class="source_right">
@@ -540,6 +541,13 @@ export default {
 </style>
 
 <style lang="scss">
+.el-radio__inner {
+  width: 18px;
+  height: 18px;
+}
+.el-radio__label {
+  font-size: 18px;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

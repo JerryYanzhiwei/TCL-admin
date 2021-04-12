@@ -5,6 +5,8 @@
       <el-button @click="downloadAccount" type="primary">下载注册列表<i class="el-icon-download el-icon--right"></i></el-button>
       <el-button @click="downloadTeamList" type="primary">下载队伍列表<i class="el-icon-download el-icon--right"></i></el-button>
       <div style="marginTop: 20px">
+        <span>评委姓名: </span>
+        <el-input v-model="judgeUserName" style="width: 20%; marginRight: 10px" size="mini"/>
         <span>邮箱地址: </span>
         <el-input v-model="emailAddress" style="width: 20%; marginRight: 10px" size="mini"/>
         <el-button @click="sendEmail" type="primary">发送提醒邮箱<i class="el-icon-s-promotion el-icon--right"></i></el-button>
@@ -141,6 +143,12 @@
         </template>
       </el-table-column>
       <el-table-column
+        label="评委姓名">
+        <template slot-scope="scope">
+          <span>{{scope.row.judgeUserName}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop=""
         label="评审情况">
         <template slot-scope="scope">
@@ -231,7 +239,8 @@ export default {
       curRow: null,
       singleSubject: null,
       emailAddress: '',
-      subjectName: ''
+      subjectName: '',
+      judgeUserName: ''
     }
   },
   watch: {
@@ -377,6 +386,10 @@ export default {
         this.$message.error('请输入邮箱地址')
         return
       }
+      if (!this.judgeUserName) {
+        this.$message.error('请输入评委姓名')
+        return
+      }
       const len = this.selectTeam.length
       const direct = this.selectTeam[0].subjectName
       const arr = this.selectTeam.filter(item => item.subjectName === direct)
@@ -393,6 +406,7 @@ export default {
       const res = await this.PUT_JUDGE_NOTIFY({
         email: this.emailAddress,
         teamProgress: this.activeType,
+        judgeUserName: this.judgeUserName,
         teamNo: teamArr
       })
       this.$message.success(res.msg)

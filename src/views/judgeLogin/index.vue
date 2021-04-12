@@ -8,7 +8,7 @@
           <el-tab-pane label="快捷登录" name="1"></el-tab-pane>
         </el-tabs>
         <div class="form_item">
-          <div class="form_label">手机号</div>
+          <div class="form_label">用户名</div>
           <div class="form_content">
             <el-input v-model="loginForm.phone"></el-input>
           </div>
@@ -85,10 +85,10 @@ export default {
     },
     // 登录
     async submitLogin () {
-      if (!this.validatePhone(this.loginForm.phone)) {
-        this.$message.error('请输入正确的手机号码')
-        return
-      }
+      // if (!this.validatePhone(this.loginForm.phone)) {
+      //   this.$message.error('请输入正确的手机号码')
+      //   return
+      // }
       // 账号密码登录 0 账号登录  1 验证码登录
       const res = this.activeType === '0' ? await this.POST_JUDGE_LOGIN(this.loginForm) : await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
       if (res.result === '0' && res.data) {
