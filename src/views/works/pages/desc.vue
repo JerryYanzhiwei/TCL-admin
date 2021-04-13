@@ -129,7 +129,8 @@
         </div>
         <div class="score_item">
           <div class="source_left">
-            <div class="pass_item">
+            <div style="marginTop: 15px;" class="pass_item">
+              <span style="marginRight: 5px; color:#de0c0c;">请选择评审是否通过: </span>
               <el-radio size="medium" v-model="radio" label="1">通过</el-radio>
               <el-radio size="medium" v-model="radio" label="2">不通过</el-radio>
             </div>
