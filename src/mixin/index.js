@@ -18,7 +18,7 @@ export default {
     },
     // 获取信息
     getAdminInfo () {
-      const adminInfo = sessionStorage.getItem('adminInfo')
+      const adminInfo = localStorage.getItem('adminInfo')
       return adminInfo ? JSON.parse(adminInfo) : {}
     }
   }

@@ -260,7 +260,7 @@ export default {
     }
   },
   created () {
-    this.userInfo = JSON.parse(sessionStorage.getItem('adminInfo'))
+    this.userInfo = JSON.parse(localStorage.getItem('adminInfo'))
     this.getData()
     this.getCategory()
   },

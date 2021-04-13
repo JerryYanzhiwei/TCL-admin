@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     menuData () {
-      const userInfo = JSON.parse(sessionStorage.getItem('adminInfo'))
+      const userInfo = JSON.parse(localStorage.getItem('adminInfo'))
       if (userInfo.superAdmin !== undefined) {
         return [
           {
