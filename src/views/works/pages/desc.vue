@@ -60,10 +60,11 @@
         <div class="content_item file_item">
           <p class="">附件</p>
           <div v-show="item.attachmentType === 2" v-for="(item, index) in pageData.attachments" :key="index" class="work_name">
-            <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
-              <!-- <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-download"></i>{{item.attachmentFileName}}</span> -->
-              <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="getFileDown(item.attachmentId)" class="el-icon-download"></i>{{item.attachmentFileName}}</span>
-            </el-tooltip>
+            <!-- <el-tooltip class="item" effect="dark" :content="item.attachmentFileName" placement="top-start">
+              <span @click="getFileDown(item.attachmentId)" class="work_item"><i @click.stop="prevewFile(item.attachmentId, item.attachmentFileName)" class="el-icon-download"></i>{{item.attachmentFileName}}</span>
+            </el-tooltip> -->
+              <span @click="getFileDown(item.attachmentId)" class="work_item">{{item.attachmentFileName}}</span>
+              <span @click="getFileDown(item.attachmentId)" class="download_btn">下载</span>
           </div>
         </div>
       </div>
@@ -401,16 +402,22 @@ export default {
         display: flex;
         align-items: center;
         color: #dc1e32;
-        margin-top: 5px;
+        margin-top: 20px;
         .work_item {
           display: inline-block;
-          width: 70%;
+          // width: 70%;
           font-size: 16px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
           cursor: pointer;
           color: #FF0000;
+        }
+        .download_btn {
+          margin-left: 10px;
+
+          color: #48B7FF;
+          cursor: pointer;
         }
         .el-icon-download {
           margin-right: 10px;

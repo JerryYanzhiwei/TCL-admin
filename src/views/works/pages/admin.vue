@@ -9,7 +9,7 @@
         <el-input v-model="judgeUserName" style="width: 20%; marginRight: 10px" size="mini"/>
         <span>邮箱地址: </span>
         <el-input v-model="emailAddress" style="width: 20%; marginRight: 10px" size="mini"/>
-        <el-button @click="sendEmail" type="primary">发送提醒邮箱<i class="el-icon-s-promotion el-icon--right"></i></el-button>
+        <el-button @click="sendEmail" type="primary">发送提醒邮件<i class="el-icon-s-promotion el-icon--right"></i></el-button>
       </div>
     </div>
     <div class="filter_contain">

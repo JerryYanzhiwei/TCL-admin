@@ -92,7 +92,7 @@ export default {
       // 账号密码登录 0 账号登录  1 验证码登录
       const res = this.activeType === '0' ? await this.POST_JUDGE_LOGIN(this.loginForm) : await this.POST_JUDGE_CODE_LOGIN(this.loginForm)
       if (res.result === '0' && res.data) {
-        sessionStorage.setItem('adminInfo', JSON.stringify(res.data))
+        localStorage.setItem('adminInfo', JSON.stringify(res.data))
         console.log(fullPath, 'fullPath')
         if (fullPath && fullPath !== '/') {
           this.$router.push({
