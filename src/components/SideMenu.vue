@@ -45,11 +45,11 @@ export default {
           {
             path: '/works/teamList?type=1',
             title: '半决赛'
-          },
-          {
-            path: '/works/teamList?type=2',
-            title: '决赛'
           }
+          // {
+          //   path: '/works/teamList?type=2',
+          //   title: '决赛'
+          // }
         ]
       } else {
         return [
@@ -60,11 +60,11 @@ export default {
           {
             path: '/works/list?type=1',
             title: '半决赛'
-          },
-          {
-            path: '/works/list?type=2',
-            title: '决赛'
           }
+          // {
+          //   path: '/works/list?type=2',
+          //   title: '决赛'
+          // }
         ]
       }
     }
