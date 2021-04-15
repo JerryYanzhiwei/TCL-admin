@@ -76,57 +76,54 @@
           <div class="source_left">
             <!-- <span class="source_title">方案完整性:</span>
             <span class="source_sub_title">方案结构完整，切题准确，提供明确的方案解决思路，无明显错误<span class="red_color">(满分15分)</span></span> -->
-            <span>维度1（满分5分）</span>
+            <span>创新性（满分40分）</span>
+            <p>解决方案在行业中具有独创性，能利用现有的知识与技术，改进或创造新的元素/事物/应用场景等，满足社会需求</p>
           </div>
           <div class="source_right">
-            <!-- <el-input @blur="calcScore" type="number" v-model="integrity" placeholder="方案完整性"></el-input> -->
-            <el-slider @change="calcScore" :min="0" :max="5" v-model="integrity" :format-tooltip="formatTooltip"></el-slider>
+            <el-input @blur="calcScore" type="number" v-model="integrity" placeholder="创新性"></el-input>
+            <!-- <el-slider @change="calcScore" :min="0" :max="5" v-model="integrity" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
             <!-- <span class="source_title">数据有效性:</span>
             <span class="source_sub_title">数据信息准确有效，对方案设计有支撑作用<span class="red_color">(满分15分)</span></span> -->
-            <span>维度2（满分10分）</span>
+            <span>可实现性（满分30分）</span>
+            <p>项目产品有较大技术实施可能性，项目团队有对于产品化的设想、调研和规划</p>
           </div>
           <div class="source_right">
-            <!-- <el-input @blur="calcScore" type="number" v-model="effect" placeholder="数据有效性"></el-input> -->
-            <el-slider @change="calcScore" :min="0" :max="10" v-model="effect" :format-tooltip="formatTooltip"></el-slider>
+            <el-input @blur="calcScore" type="number" v-model="effect" placeholder="可实现性（满分30分）"></el-input>
+            <!-- <el-slider @change="calcScore" :min="0" :max="10" v-model="effect" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
             <!-- <span class="source_title">方案设计科学性:</span>
             <span class="source_sub_title">有明确、适用的设计方法，采用了定性和定量手段,设计方法科学、严谨<span class="red_color">(满分20分)</span></span> -->
-            <span>维度3（满分15分）</span>
+            <span>作品价值（满分30分）</span>
+            <p>充分挖掘了用户需求，技术和解决方案具有针对性，能够解决行业痛点问题，给企业或社会带来价值。</p>
           </div>
           <div class="source_right">
-            <!-- <el-input @blur="calcScore" type="number" v-model="scientificity" placeholder="方案设计科学性"></el-input> -->
-            <el-slider @change="calcScore" :min="0" :max="15" v-model="scientificity" :format-tooltip="formatTooltip"></el-slider>
+            <el-input @blur="calcScore" type="number" v-model="scientificity" placeholder="作品价值（满分30分）"></el-input>
+            <!-- <el-slider @change="calcScore" :min="0" :max="15" v-model="scientificity" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
-        <div class="score_item">
+        <!-- <div class="score_item">
           <div class="source_left">
-            <!-- <span class="source_title">方案实用性:</span>
-            <span class="source_sub_title">方案依据充分，联系实际情况，可落地实施<span class="red_color">(满分25分)</span></span> -->
             <span>维度4（满分25分）</span>
           </div>
           <div class="source_right">
-            <!-- <el-input @blur="calcScore" type="number" v-model="practicability" placeholder="方案实用性"></el-input> -->
             <el-slider @change="calcScore" :min="0" :max="25" v-model="practicability" :format-tooltip="formatTooltip"></el-slider>
           </div>
         </div>
         <div class="score_item">
           <div class="source_left">
-            <!-- <span class="source_title">方案创新性:</span>
-            <span class="source_sub_title">方案存在创新理念，亮点突出<span class="red_color">(满分25分)</span></span> -->
             <span>维度5（满分30分）</span>
           </div>
           <div class="source_right">
-            <!-- <el-input v-model="innovation" @blur="calcScore" placeholder="方案创新性"></el-input> -->
             <el-slider @change="calcScore" :min="0" :max="30" v-model="innovation" :format-tooltip="formatTooltip"></el-slider>
           </div>
-        </div>
+        </div> -->
         <div class="score_item">
           <div class="source_left">
             <div style="marginTop: 15px;" class="pass_item">
@@ -241,11 +238,11 @@ export default {
     calcScore () {
       let all = 0
       const reg = /(^[0-9]{1,3}$)|(^[0-9]{1,2}[.]{1}[0-9]{1,2}$)/
-      reg.test(this.integrity) ? (all = this.integrity) : all = 0
-      reg.test(this.effect) && (all += (this.effect))
-      reg.test(this.scientificity) && (all += (this.scientificity))
-      reg.test(this.practicability) && (all += (this.practicability))
-      reg.test(this.innovation) && (all += (this.innovation))
+      reg.test(this.integrity) ? (all = Number(this.integrity)) : all = 0
+      reg.test(this.effect) && (all += Number(this.effect))
+      reg.test(this.scientificity) && (all += Number(this.scientificity))
+      // reg.test(this.practicability) && (all += (this.practicability))
+      // reg.test(this.innovation) && (all += (this.innovation))
       this.score = all
     },
     async prevewFile (attachmentId, file) {
@@ -286,18 +283,18 @@ export default {
     },
     // 提交
     async submit () {
-      // if (!this.integrity) {
-      //   this.$message.error('请填写方案完整性评分')
-      //   return
-      // }
-      // if (!this.effect) {
-      //   this.$message.error('请填写数据有效性')
-      //   return
-      // }
-      // if (!this.scientificity) {
-      //   this.$message.error('请填写方案设计科学性')
-      //   return
-      // }
+      if (!this.integrity) {
+        this.$message.error('请填写创新性')
+        return
+      }
+      if (!this.effect) {
+        this.$message.error('请填写可实现性')
+        return
+      }
+      if (!this.scientificity) {
+        this.$message.error('请填写作品价值')
+        return
+      }
       // if (!this.practicability) {
       //   this.$message.error('请填写方案实用性')
       //   return
@@ -437,7 +434,7 @@ export default {
       font-weight: 400;
       color: #333333;
       .source_left {
-        width: 70%;
+        width: 60%;
       }
       .source_right {
         width: 30%;
