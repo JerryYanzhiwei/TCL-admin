@@ -89,19 +89,19 @@
           <el-popover width="200" trigger="hover" :content="scope.row.teamName" placement="top">
             <div>{{scope.row.teamName}}</div>
             <div slot="reference" class="name-wrapper">
-              <div class="nowrap">{{ scope.row.teamName }}</div>
+              <div class="clickable nowrap" @click="setSource(scope.row)">{{ scope.row.teamName }}</div>
             </div>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="作品名称">
         <template slot-scope="scope">
           <el-tooltip :content="scope.row.opusName" placement="top">
             <span style="color: #33394E">{{scope.row.opusName}}</span>
           </el-tooltip>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <!-- <el-table-column
         prop="directionName"
         label="方向">
@@ -118,6 +118,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="40"
         label="赛区">
         <template slot-scope="scope">
           <span>{{getZone(scope.row.matchZone)}}</span>
@@ -137,6 +138,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        min-width="40"
         label="得分">
         <template slot-scope="scope">
           <span>{{scope.row.totalScore / 100 || '---'}}</span>
@@ -149,12 +151,22 @@
         </template>
       </el-table-column>
       <el-table-column
+        label="标记状态">
+        <template slot-scope="scope">
+          <span>{{scope.row.pass === 1 ? '不合格' : '合格'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop=""
         label="评审情况">
         <template slot-scope="scope">
           <!-- <PublicButton v-if="activeType !== '2'" @clickHandle="pass(scope.row, 1)">通过</PublicButton>
           <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
-          <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
+          <!-- <span>详情</span> -->
+          <span class="clickable" @click="teamPass(scope.row)">
+            {{scope.row.pass === 1 ? '合格' : '不合格'}}
+          </span>
+          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
           <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
           <span style="marginLeft: 10px" class="clickable" @click="resetScore(scope.row)">重置</span>
         </template>
@@ -265,7 +277,7 @@ export default {
     this.getCategory()
   },
   methods: {
-    ...mapActions(['PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE', 'PUT_JUDGE_NOTIFY', 'PUT_RESET_SCORE']),
+    ...mapActions(['PUT_TEAM_TAG', 'PREVIEW_DOWN_FILE', 'PUT_EDIT_PROCESS', 'GET_CATEGORYS', 'GET_TEAM_LIST', 'GET_ACCOUNT_LIST', 'GET_DOWN_FILE', 'PUT_JUDGE_NOTIFY', 'PUT_RESET_SCORE']),
     async getFileDown (attachmentId) {
       await this.GET_DOWN_FILE(attachmentId)
     },
@@ -310,6 +322,16 @@ export default {
         })
       }
     },
+    // 跳转详情
+    setSource (row) {
+      this.$router.push({
+        path: '/works/adminDesc',
+        query: {
+          teamNo: row.teamNo,
+          teamProgress: this.activeType
+        }
+      })
+    },
     // 切换分页
     pageChange (data) {
       this.pageForm.pageNo = data
@@ -330,14 +352,6 @@ export default {
       this.activeType = e.name
       this.getData()
     },
-    // 点击评分
-    setSource (row) {
-      console.log('row:', row)
-      this.$router.push({
-        path: '/works/desc',
-        query: {}
-      })
-    },
     open (row, status) {
       this.$confirm('确认后将回退到上一个评审阶段', '提示', {
         confirmButtonText: '确定',
@@ -346,6 +360,16 @@ export default {
       }).then(() => {
         this.pass(row, status)
       }).catch(() => {})
+    },
+
+    // 标记队伍是否合格
+    async teamPass (row) {
+      const res = await this.PUT_TEAM_TAG({
+        pass: row.pass === 1 ? 0 : 1,
+        teamNo: row.teamNo
+      })
+      this.getData()
+      this.$message.success(res.msg)
     },
     // 通过
     async pass (row, status) {

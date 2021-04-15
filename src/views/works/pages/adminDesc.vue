@@ -80,7 +80,7 @@
             <p>解决方案在行业中具有独创性，能利用现有的知识与技术，改进或创造新的元素/事物/应用场景等，满足社会需求</p>
           </div>
           <div class="source_right">
-            <el-input @change="(e) => changeHandle(e, 40)" max="40" @blur="calcScore" type="number" v-model="integrity" placeholder="创新性"></el-input>
+            <el-input disabled @blur="calcScore" type="number" v-model="integrity" placeholder="创新性"></el-input>
             <!-- <el-slider @change="calcScore" :min="0" :max="5" v-model="integrity" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
@@ -92,7 +92,7 @@
             <p>项目产品有较大技术实施可能性，项目团队有对于产品化的设想、调研和规划</p>
           </div>
           <div class="source_right">
-            <el-input @change="(e) => changeHandle(e, 30)" @blur="calcScore" type="number" v-model="effect" placeholder="可实现性（满分30分）"></el-input>
+            <el-input disabled @blur="calcScore" type="number" v-model="effect" placeholder="可实现性（满分30分）"></el-input>
             <!-- <el-slider @change="calcScore" :min="0" :max="10" v-model="effect" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
@@ -104,7 +104,7 @@
             <p>充分挖掘了用户需求，技术和解决方案具有针对性，能够解决行业痛点问题，给企业或社会带来价值。</p>
           </div>
           <div class="source_right">
-            <el-input @change="(e) => changeHandle(e, 30)" @blur="calcScore" type="number" v-model="scientificity" placeholder="作品价值（满分30分）"></el-input>
+            <el-input disabled @blur="calcScore" type="number" v-model="scientificity" placeholder="作品价值（满分30分）"></el-input>
             <!-- <el-slider @change="calcScore" :min="0" :max="15" v-model="scientificity" :format-tooltip="formatTooltip"></el-slider> -->
           </div>
         </div>
@@ -128,8 +128,8 @@
           <div class="source_left">
             <div style="marginTop: 15px;" class="pass_item">
               <span style="marginRight: 5px; color:#de0c0c;">请选择评审是否通过: </span>
-              <el-radio size="medium" v-model="radio" label="1">通过</el-radio>
-              <el-radio size="medium" v-model="radio" label="2">不通过</el-radio>
+              <el-radio disabled size="medium" v-model="radio" label="1">通过</el-radio>
+              <el-radio disabled size="medium" v-model="radio" label="2">不通过</el-radio>
             </div>
           </div>
           <div class="source_right">
@@ -159,10 +159,10 @@
     <div class="pass_contain">
       <PublicTitle title="评语"></PublicTitle>
       <div class="comment_box">
-        <el-input maxlength="200" style="width:412px;" @blur="calcScore" :rows="3" v-model="comments" type="textarea" placeholder="评语"></el-input>
+        <el-input disabled maxlength="200" style="width:412px;" @blur="calcScore" :rows="3" v-model="comments" type="textarea" placeholder="评语"></el-input>
         <div class="submit_btn_container">
-          <el-button @click="$router.go(-1)">返回</el-button>
-          <el-button type="primary" @click="submit">提交</el-button>
+          <!-- <el-button @click="$router.go(-1)">返回</el-button>
+          <el-button type="primary" @click="submit">提交</el-button> -->
         </div>
       </div>
     </div>
@@ -231,14 +231,9 @@ export default {
     this.getTeamDetail()
   },
   methods: {
-    ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_JUDGE_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),
+    ...mapActions(['PREVIEW_JUDGE_DOWN_FILE', 'GET_ADMIN_TEAM_DETAIL', 'GET_JUDGE_DOWN_FILE', 'POST_JUDGE_SCORE']),
     formatTooltip (val) {
       return val
-    },
-    changeHandle (e, val) {
-      if (Number(e) > val) {
-        this.$message.error('该项评分不能大于规定满分')
-      }
     },
     calcScore () {
       let all = 0
@@ -262,7 +257,7 @@ export default {
     },
     // 获取队伍详情
     async getTeamDetail () {
-      const res = await this.GET_JUDGE_TEAM_DETAIL({
+      const res = await this.GET_ADMIN_TEAM_DETAIL({
         teamNo: this.$route.query.teamNo,
         teamProgress: this.$route.query.teamProgress
       })
@@ -286,11 +281,6 @@ export default {
         this.submit()
       }).catch(() => {})
     },
-
-    myIsNaN (value) {
-      return typeof value === 'number' && !isNaN(value)
-    },
-
     // 提交
     async submit () {
       if (!this.integrity) {
@@ -303,10 +293,6 @@ export default {
       }
       if (!this.scientificity) {
         this.$message.error('请填写作品价值')
-        return
-      }
-      if (this.integrity > 40 || this.effect > 30 || this.scientificity > 30) {
-        this.$message.error('各项评分不能超过规定分数')
         return
       }
       // if (!this.practicability) {
@@ -449,12 +435,6 @@ export default {
       color: #333333;
       .source_left {
         width: 60%;
-        span {
-          font-weight: bold;
-        }
-        p {
-          margin-top: 10px;
-        }
       }
       .source_right {
         width: 30%;

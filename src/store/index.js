@@ -122,6 +122,11 @@ export default new Vuex.Store({
       const { data: res } = await axios.get(`/judge/team/score?teamNo=${data.teamNo}&teamProgress=${data.teamProgress}`)
       return res
     },
+    // 管理员查询队伍评分详情
+    async GET_ADMIN_TEAM_DETAIL ({ commit }, data = {}) {
+      const { data: res } = await axios.get(`/admin/team/score?teamNo=${data.teamNo}&teamProgress=${data.teamProgress}`)
+      return res
+    },
     // 评委评分
     async POST_JUDGE_SCORE ({ commit }, data = {}) {
       const { data: res } = await axios.post(`/judge/team/score?comments=${data.comments}&teamNo=${data.teamNo}&totalScore=${data.totalScore}&teamProgress=${data.teamProgress}`, data.scoreDimensions)
@@ -129,6 +134,11 @@ export default new Vuex.Store({
     },
     async GET_CATEGORYS ({ commit }, data = {}) {
       const { data: res } = await axios.get('/user/direction')
+      return res
+    },
+    // 标记队伍是否合格
+    async PUT_TEAM_TAG ({ commit }, data = {}) {
+      const { data: res } = await axios.put(`/admin/team/pass?pass=${data.pass}&teamNo=${data.teamNo}`)
       return res
     }
   },

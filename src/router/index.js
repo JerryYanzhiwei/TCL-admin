@@ -6,6 +6,7 @@ const Works = () => import(/* webpackChunkName: "works" */ '../views/works/index
 const WorksList = () => import(/* webpackChunkName: "works" */ '../views/works/pages/index.vue')
 const WorksDesc = () => import(/* webpackChunkName: "works" */ '../views/works/pages/desc.vue')
 const WorksAdmin = () => import(/* webpackChunkName: "works" */ '../views/works/pages/admin.vue')
+const AdminDesc = () => import(/* webpackChunkName: "works" */ '../views/works/pages/adminDesc.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,6 +36,10 @@ const routes = [
       {
         path: 'teamList',
         component: WorksAdmin
+      },
+      {
+        path: 'adminDesc',
+        component: AdminDesc
       }
     ]
   },

@@ -4,7 +4,7 @@
       <MainHeader></MainHeader>
     </el-header>
     <el-container :style="{ backgroundImage: `url(${bg})`, backgroundSize: '100% 100%' }">
-      <el-aside width="20%">
+      <el-aside width="13%">
         <SideMenu />
       </el-aside>
       <el-main>
