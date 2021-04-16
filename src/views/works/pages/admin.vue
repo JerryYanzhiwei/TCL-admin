@@ -163,12 +163,13 @@
           <!-- <PublicButton v-if="activeType !== '2'" @clickHandle="pass(scope.row, 1)">通过</PublicButton>
           <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
           <!-- <span>详情</span> -->
-          <span class="clickable" @click="teamPass(scope.row)">
-            {{scope.row.pass === 1 ? '合格' : '不合格'}}
-          </span>
-          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
-          <span style="marginLeft: 10px" class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
-          <span style="marginLeft: 10px" class="clickable" @click="resetScore(scope.row)">重置</span>
+          <div class="operation_contain">
+            <span class="clickable" @click="teamPass(scope.row)">合格</span>
+            <span class="clickable" @click="teamPass(scope.row)">不合格</span>
+            <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
+            <span class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
+            <span class="clickable" @click="resetScore(scope.row)">重置</span>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -460,6 +461,11 @@ export default {
 
 <style lang="scss" scoped>
 .works_list_container {
+  .operation_contain {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
   .filter_contain{
     display: flex;
     margin-bottom: 30px;
