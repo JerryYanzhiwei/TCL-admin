@@ -153,7 +153,10 @@
       <el-table-column
         label="标记状态">
         <template slot-scope="scope">
-          <span>{{scope.row.pass === 1 ? '不合格' : '合格'}}</span>
+          <span>{{scope.row.pass === 1 && '不合格' ||
+             scope.row.pass === 0 && '合格' ||
+             ''
+             }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -164,8 +167,8 @@
           <PublicButton v-if="activeType !== '0'" @clickHandle="pass(scope.row, 0)">不通过</PublicButton> -->
           <!-- <span>详情</span> -->
           <div class="operation_contain">
-            <span class="clickable" @click="teamPass(scope.row)">合格</span>
-            <span class="clickable" @click="teamPass(scope.row)">不合格</span>
+            <span class="clickable" @click="teamPass(scope.row, 0)">合格</span>
+            <span class="clickable" @click="teamPass(scope.row, 1)">不合格</span>
             <span class="clickable" v-if="activeType !== '2'" @click="pass(scope.row, 1)">通过</span>
             <span class="clickable" v-if="activeType !== '0'" @click="open(scope.row, 0)">不通过</span>
             <span class="clickable" @click="resetScore(scope.row)">重置</span>
@@ -364,9 +367,9 @@ export default {
     },
 
     // 标记队伍是否合格
-    async teamPass (row) {
+    async teamPass (row, status) {
       const res = await this.PUT_TEAM_TAG({
-        pass: row.pass === 1 ? 0 : 1,
+        pass: status,
         teamNo: row.teamNo
       })
       this.getData()
