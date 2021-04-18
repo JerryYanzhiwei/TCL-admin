@@ -435,6 +435,13 @@ export default {
       color: #333333;
       .source_left {
         width: 60%;
+        span {
+          font-weight: bold;
+        }
+        p {
+          margin-top: 10px;
+          font-size: 14px;
+        }
       }
       .source_right {
         width: 30%;
