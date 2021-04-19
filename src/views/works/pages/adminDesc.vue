@@ -77,7 +77,7 @@
             <!-- <span class="source_title">方案完整性:</span>
             <span class="source_sub_title">方案结构完整，切题准确，提供明确的方案解决思路，无明显错误<span class="red_color">(满分15分)</span></span> -->
             <span>创新性（满分40分）</span>
-            <p>解决方案在行业中具有独创性，能利用现有的知识与技术，改进或创造新的元素/事物/应用场景等，满足社会需求</p>
+            <p>评分说明：解决方案在行业中具有独创性，能利用现有的知识与技术，改进或创造新的元素/事物/应用场景等，满足社会需求</p>
           </div>
           <div class="source_right">
             <el-input disabled @blur="calcScore" type="number" v-model="integrity" placeholder="创新性"></el-input>
@@ -89,7 +89,7 @@
             <!-- <span class="source_title">数据有效性:</span>
             <span class="source_sub_title">数据信息准确有效，对方案设计有支撑作用<span class="red_color">(满分15分)</span></span> -->
             <span>可实现性（满分30分）</span>
-            <p>项目产品有较大技术实施可能性，项目团队有对于产品化的设想、调研和规划</p>
+            <p>评分说明：项目产品有较大技术实施可能性，项目团队有对于产品化的设想、调研和规划</p>
           </div>
           <div class="source_right">
             <el-input disabled @blur="calcScore" type="number" v-model="effect" placeholder="可实现性（满分30分）"></el-input>
@@ -101,7 +101,7 @@
             <!-- <span class="source_title">方案设计科学性:</span>
             <span class="source_sub_title">有明确、适用的设计方法，采用了定性和定量手段,设计方法科学、严谨<span class="red_color">(满分20分)</span></span> -->
             <span>作品价值（满分30分）</span>
-            <p>充分挖掘了用户需求，技术和解决方案具有针对性，能够解决行业痛点问题，给企业或社会带来价值。</p>
+            <p>评分说明：充分挖掘了用户需求，技术和解决方案具有针对性，能够解决行业痛点问题，给企业或社会带来价值。</p>
           </div>
           <div class="source_right">
             <el-input disabled @blur="calcScore" type="number" v-model="scientificity" placeholder="作品价值（满分30分）"></el-input>
