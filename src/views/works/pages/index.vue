@@ -190,6 +190,8 @@ export default {
   },
   created () {
     this.userInfo = JSON.parse(localStorage.getItem('adminInfo'))
+    if (sessionStorage.getItem('pageNo')) this.pageForm.pageNo = Number(sessionStorage.getItem('pageNo'))
+    sessionStorage.removeItem('pageNo')
     this.getData()
     this.getCategory()
   },
@@ -274,6 +276,7 @@ export default {
       if (row.judgeScoreState === 1) {
         return
       }
+      sessionStorage.setItem('pageNo', this.pageForm.pageNo)
       sessionStorage.setItem('teamInfo', JSON.stringify(row))
       this.$router.push({
         path: '/works/desc',

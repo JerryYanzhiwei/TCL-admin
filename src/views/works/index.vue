@@ -28,6 +28,9 @@ export default {
       bg: require('@/assets/images/Glass.png')
     }
   },
+  beforeCreate () {
+    sessionStorage.removeItem('pageNo')
+  },
   created () {
     const isLogin = '1'
     // 未登录跳转至登录页
