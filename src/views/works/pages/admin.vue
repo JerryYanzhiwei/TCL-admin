@@ -277,6 +277,10 @@ export default {
   },
   created () {
     this.userInfo = JSON.parse(localStorage.getItem('adminInfo'))
+    if (sessionStorage.getItem('adminPage')) {
+      this.pageForm.pageNo = Number(sessionStorage.getItem('adminPage'))
+      sessionStorage.removeItem('adminPage')
+    }
     this.getData()
     this.getCategory()
   },
@@ -328,6 +332,7 @@ export default {
     },
     // 跳转详情
     setSource (row) {
+      sessionStorage.setItem('adminPage', this.pageForm.pageNo)
       this.$router.push({
         path: '/works/adminDesc',
         query: {

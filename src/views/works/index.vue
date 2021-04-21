@@ -30,6 +30,7 @@ export default {
   },
   beforeCreate () {
     sessionStorage.removeItem('pageNo')
+    sessionStorage.removeItem('adminPage')
   },
   created () {
     const isLogin = '1'
