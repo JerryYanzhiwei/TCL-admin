@@ -1,5 +1,6 @@
 <template>
   <div class="works_desc_container">
+    <p @click="backList" class="back_btn">返回</p>
     <div class="content_container">
       <PublicTitle title="队伍名称"></PublicTitle>
       <div class="team_info">
@@ -235,6 +236,9 @@ export default {
     formatTooltip (val) {
       return val
     },
+    backList () {
+      this.$router.go(-1)
+    },
     calcScore () {
       let all = 0
       const reg = /(^[0-9]{1,3}$)|(^[0-9]{1,2}[.]{1}[0-9]{1,2}$)/
@@ -344,13 +348,19 @@ export default {
 
 <style lang="scss" scoped>
 .works_desc_container {
+  .back_btn {
+    padding: 10px 0;
+    color: #48b7ff;
+
+    cursor: pointer;
+  }
   .el-icon-view {
     margin-right: 5px;
 
     color: #dc1e32;
    &:hover {
       color: #333;
-}
+  }
   }
   .submit_btn_container {
     text-align: right;
