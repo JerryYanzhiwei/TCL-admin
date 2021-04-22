@@ -276,6 +276,15 @@ export default {
     }
   },
   created () {
+    this.pageForm = {
+      pageSize: 30,
+      pageNo: 1,
+      teamProgress: this.$route.query.type || 0,
+      directionId: null,
+      matchZone: null,
+      subjectId: null,
+      teamNo: null
+    }
     this.userInfo = JSON.parse(localStorage.getItem('adminInfo'))
     if (sessionStorage.getItem('adminPage')) {
       this.pageForm.pageNo = Number(sessionStorage.getItem('adminPage'))
